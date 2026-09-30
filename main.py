@@ -5,6 +5,7 @@ app = FastAPI()
 
 # username: password
 creds = {}
+
 # heading: [description, username]
 data = {}
 
@@ -29,6 +30,7 @@ class DeleteData(LoginData):
     heading: str
 
 
+# returns error if invalid, otherwise it returns nothing
 def login(username: str, password: str):
     correct_password = creds.get(username)
 
@@ -48,9 +50,10 @@ async def root():
 @app.get("/data")
 async def get_data():
     results = []
+
     for heading in data:
-        discription, username = data[heading]
-        results.append([heading, discription, username])
+        description, username = data[heading]
+        results.append([heading, description, username])
 
     return {"data": results}
 
@@ -58,16 +61,17 @@ async def get_data():
 @app.get("/search/{query}")
 async def search_data(query: str):
     results = []
+
     for heading in data:
-        discription, username = data[heading]
+        description, username = data[heading]
 
-        if query.lower() in heading.lower():
-            results.append([heading, discription, username])
-
-        if query.lower() in discription.lower():
-            results.append([heading, discription, username])
+        # Add the result only once, even if the query
+        # appears in both heading and description.
+        if (query.lower() in heading.lower()) or (query.lower() in description.lower()):
+            results.append([heading, description, username])
 
     return {"data": results}
+
 
 # validates their credentials. if new username, it creates one.
 @app.post("/login")
@@ -81,7 +85,7 @@ async def login_user(data: LoginData):
     if correct_password == data.password:
         return {"message": "Login successful"}
     else:
-        return {"message": "Password Incorrect"}
+        raise HTTPException(status_code=401, detail="Password Incorrect")
 
 
 @app.post("/upload")
@@ -94,16 +98,20 @@ async def upload_data(new_data: UploadData):
     return {"message": "Data uploaded successfully", "data": data}
 
 
-# im unsure how to handle this
-# rn it just requires a heading, a new_heading, and a description
-# if someone wants to change only description and keep heading the same,
-# then they can pass the same value for heading and new_heading
 @app.post("/update")
 async def update_data(new_data: UpdateData):
     login(new_data.username, new_data.password)
 
     if new_data.heading not in data:
         raise HTTPException(status_code=404, detail="Heading not found")
+
+    description, username = data[new_data.heading]
+
+    if username != new_data.username:
+        raise HTTPException(status_code=403, detail="Not your heading")
+
+    if new_data.new_heading != new_data.heading and new_data.new_heading in data:
+        raise HTTPException(status_code=409, detail="Heading already exists")
 
     # delete old heading
     data.pop(new_data.heading)
@@ -120,6 +128,11 @@ async def delete_data(delete_request: DeleteData):
 
     if delete_request.heading not in data:
         raise HTTPException(status_code=404, detail="Heading not found")
+
+    description, username = data[delete_request.heading]
+
+    if username != delete_request.username:
+        raise HTTPException(status_code=403, detail="Not your heading")
 
     data.pop(delete_request.heading)
 
