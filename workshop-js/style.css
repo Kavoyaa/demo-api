@@ -1,0 +1,144 @@
+body {
+    background: #fff;
+    color: #202124;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+.container {
+    width: 600px;
+    max-width: 90%;
+    margin: 100px auto;
+    text-align: center;
+}
+
+.footer {
+    width: 600px;
+    max-width: 90%;
+    margin: auto auto;
+    text-align: center;
+}
+
+.logo-img-on-home {
+    width: 272px;
+    max-width: 80%;
+    display: block;
+    margin: 0 auto 28px;
+}
+
+.search-bar {
+    position: relative;
+}
+
+input[type="text"],
+textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px 20px;
+    border: 1px solid #dfe1e5;
+    border-radius: 24px;
+    background: #fff;
+    color: #202124;
+    font: 16px Arial;
+    outline: none;
+}
+
+input[type="text"]:focus,
+textarea:focus {
+    border-color: transparent;
+    box-shadow: 0 1px 6px #dfe1e5;
+}
+
+textarea {
+    height: 180px;
+    resize: vertical;
+    border-radius: 8px;
+}
+
+.search-button {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 80px;
+    height: 40px;
+    border: 0;
+    border-radius: 24px;
+    background: transparent;
+    color: #5f6368;
+    cursor: pointer;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 28px;
+}
+
+button,
+.link-button {
+    padding: 10px 16px;
+    border: 1px solid #f8f9fa;
+    border-radius: 4px;
+    background: #f8f9fa;
+    color: #3c4043;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+button:hover,
+.link-button:hover {
+    border-color: #dadce0;
+    box-shadow: 0 1px 1px #ddd;
+}
+
+#posts-container {
+    margin-top: 40px;
+    text-align: left;
+}
+
+.result-box {
+    padding: 18px 5px;
+    border-bottom: 1px solid #dadce0;
+    cursor: pointer;
+}
+
+.result-box h3 {
+    margin: 0 0 8px;
+    color: #1a0dab;
+    font-weight: normal;
+}
+
+.result-box p {
+    margin: 5px 0;
+    color: #4d5156;
+}
+
+.post-content {
+    text-align: left;
+    white-space: pre-wrap;
+    line-height: 1.6;
+}
+
+.post-user {
+    color: #5f6368;
+    font-size: 14px;
+}
+
+.form {
+    text-align: left;
+}
+
+.form input,
+.form textarea {
+    margin-bottom: 15px;
+}

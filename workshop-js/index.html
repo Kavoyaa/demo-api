@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Giggle</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <img
+            class="logo-img-on-home"
+            src="giggle.png"
+            alt="Giggle"
+        >
+
+        <form class="search-bar" id="search-form">
+            <input
+                id="search-input"
+                type="text"
+                placeholder="What's on your mind?"
+            >
+
+            <button
+                type="submit"
+                class="search-button"
+                aria-label="Search"
+            >
+                Search
+            </button>
+        </form>
+
+        <div class="button-group">
+            <a href="pages/create.html" class="link-button">
+                <b>+</b> Create Post
+            </a>
+
+            <button id="see-all-button" class="link-button">
+                <b>=</b> See All
+            </button>
+
+            <a href="https://links.osdc.dev/" class="link-button">
+                <b>></b> OSDC Links
+            </a>
+        </div>
+
+        <div id="posts-container"></div>
+    </div>
+
+    <div class="footer">
+            Made with <b>&lt;3</b> by
+            <a href="https://osdc.dev">
+                <img
+                src="https://links.osdc.dev/assets/logo-pixel.svg"
+                alt="OSDC"
+                height="18"
+                >
+            </a>
+    </div>
+
+    <script src="scripts/script.js"></script>
+    <!--If you are remaking the website, DO NOT include the line below. (Also do not make the inspect.js file, you do not need it. Banane ka mann ho toh bana lena)-->
+        <script src="scripts/inspect.js"></script>
+    <!---->
+</body>
+</html>
