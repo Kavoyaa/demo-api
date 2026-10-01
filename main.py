@@ -1,4 +1,7 @@
+from pathlib import Path
+
 from fastapi import FastAPI, HTTPException
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 app = FastAPI()
@@ -39,11 +42,6 @@ def login(username: str, password: str):
 
     if correct_password != password:
         raise HTTPException(status_code=401, detail="Incorrect Password!")
-
-
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
 
 
 # no need auth for get data
@@ -137,3 +135,10 @@ async def delete_data(delete_request: DeleteData):
     data.pop(delete_request.heading)
 
     return {"message": "Data deleted successfully", "data": data}
+
+
+app.mount(
+    "/",
+    StaticFiles(directory=Path(__file__).parent / "workshop-js", html=True),
+    name="frontend",
+)
