@@ -1,12 +1,13 @@
 const API = window.location.origin;
 
 async function api(url, options = {}) {
-    const response = await fetch(API + url, {
-        headers: {
-            "Content-Type": "application/json"
-        },
-        ...options
-    });
+    const { method = "GET", params = {} } = options;
+    const query = new URLSearchParams(params).toString();
+
+    const response = await fetch(
+        API + url + (query ? "?" + query : ""),
+        { method: method }
+    );
 
     const data = await response.json();
 
@@ -33,10 +34,10 @@ async function login() {
     try {
         const result = await api("/login", {
             method: "POST",
-            body: JSON.stringify({
+            params: {
                 username: username,
                 password: password
-            })
+            }
         });
 
         if (
@@ -223,11 +224,11 @@ async function setupPost() {
                 try {
                     await api("/delete", {
                         method: "POST",
-                        body: JSON.stringify({
+                        params: {
                             username: sessionStorage.username,
                             password: sessionStorage.password,
                             heading: post[0]
-                        })
+                        }
                     });
 
                     location.href = "../index.html";
@@ -301,23 +302,23 @@ async function setupCreate() {
             if (edit) {
                 await api("/update", {
                     method: "POST",
-                    body: JSON.stringify({
+                    params: {
                         username: user.username,
                         password: user.password,
                         heading: edit,
                         new_heading: title,
                         new_description: description
-                    })
+                    }
                 });
             } else {
                 await api("/upload", {
                     method: "POST",
-                    body: JSON.stringify({
+                    params: {
                         username: user.username,
                         password: user.password,
                         heading: title,
                         description: description
-                    })
+                    }
                 });
             }
 
