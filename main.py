@@ -23,6 +23,10 @@ def login(username: str, password: str):
         raise HTTPException(status_code=401, detail="Incorrect Password!")
 
 
+def is_admin(username: str):
+    return username == "admin"
+
+
 # no need auth for get data
 @app.get("/data")
 async def get_data():
@@ -114,7 +118,7 @@ async def delete_data(username: str, password: str, heading: str):
 
     description, post_username = data[heading]
 
-    if post_username != username:
+    if post_username != username  and not is_admin(username):
         raise HTTPException(status_code=403, detail="Not your heading")
 
     data.pop(heading)
